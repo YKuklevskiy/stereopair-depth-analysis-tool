@@ -19,12 +19,17 @@ def get_blob_by_blob_index(blobs: list, index):
     return d['right_cam_d'], d['right_cam_r'], d['left_cam_d'], d['left_cam_r']
 
 
-silent = True
+silent = False
 positions_analyzed = range(len(files_sorted) // 4)
 # positions_analyzed = [0]
+id_filter = ['1715901218315', '1715901487391']
+# additional_condition_for_position = None
+additional_condition_for_position = lambda l_pngs: len(set(id_filter).intersection(set(map(get_time_index_from_name, l_pngs)))) > 0
 for i in positions_analyzed:
-    print(f"Обработка позиции {i}")
     pngs = get_blob_by_blob_index(files_sorted, i)
+    if additional_condition_for_position is not None and not additional_condition_for_position(pngs):
+        continue
+    print(f"Обработка позиции {i}")
     print(pngs)
 
     results = depth_and_metrics.do_your_stuff(*[f"{raw_data_folder}{png}" for png in pngs],
