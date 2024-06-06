@@ -165,7 +165,7 @@ def do_your_stuff(rd_file_name, rr_file_name, ld_file_name, lr_file_name, silent
     # print("Ложно-отрицательные дальние пиксели:", fnpc)
 
     # False Positive pixel count
-    fppc = np.logical_and(calc_depth_far_thresh != 0, real_depth_far_thresh == 255).sum()
+    fppc = np.logical_and(calc_depth_far_thresh == 255, real_depth_far_thresh == 0).sum()
     fppr = fppc / pixel_count
     # print("Ложно-положительные дальние пиксели:", fppc)
 
